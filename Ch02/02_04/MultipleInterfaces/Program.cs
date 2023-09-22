@@ -12,8 +12,14 @@ namespace MultipleInterfaces
 
     // TODO: Create an IEncryptable interface
 
+    interface IEncryptable
+    {
+        void Encrypt();
+        void Decrypt();
+    }
+
     // TODO: Implement from both interfaces
-    class Document : IStorable
+    class Document : IStorable, IEncryptable
     {
         private string name;
 
@@ -34,6 +40,16 @@ namespace MultipleInterfaces
             get; set;
         }
 
+        public void Encrypt()
+        {
+            Console.WriteLine("Encrypt");
+        }
+
+        public void Decrypt()
+        {
+            Console.WriteLine("Dencrypt");
+        }
+
         // TODO: Implement IEncryptable
     }
 
@@ -43,6 +59,10 @@ namespace MultipleInterfaces
             Document d = new Document("Test Document");
 
             // TODO: Exercise the interfaces
+            d.Load();
+            d.Encrypt();
+            d.Save();
+            d.Decrypt();
 
             Console.WriteLine("\nPress Enter to continue...");
             Console.ReadLine();
