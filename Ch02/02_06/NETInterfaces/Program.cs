@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
 // TODO: Include the namespace that contains INotifyPropertyChanged
+using System.ComponentModel;
 
 namespace NETInterfaces
 {
@@ -13,14 +15,18 @@ namespace NETInterfaces
     }
 
     // TODO: Implement INotifyPropertyChanged
-    class Document : IStorable
+    class Document : IStorable, INotifyPropertyChanged
     {
         private string name;
         private Boolean mNeedsSave = false;
 
         // TODO: INotifyPropertyChanged requires the implementation of 1 event
+        public event PropertyChangedEventHandler PropertyChanged;
 
         // TODO: Define a utility function to call the PropertyChanged event
+        private void NotifyPropChanged(string propName){
+            PropertyChanged(this, new PropertyChangedEventArgs(propName));
+        }
 
         public Document(string s) {
             name = s;
@@ -31,6 +37,7 @@ namespace NETInterfaces
             get { return name; }
             set { 
                 name = value;
+                NotifyPropChanged("DocName");
             }
         }
 
@@ -46,6 +53,7 @@ namespace NETInterfaces
             get { return mNeedsSave; }
             set { 
                 mNeedsSave = value;
+                NotifyPropChanged("NeedsSave");
             }
         }
     }
@@ -56,7 +64,11 @@ namespace NETInterfaces
             Document d = new Document("Test Document");
 
             // TODO: implement a delegate to handle the PropertyChanged event
-            
+            d.PropertyChanged += delegate(object sender, PropertyChangedEventArgs e)
+            {
+                Console.WriteLine("Document property changed: {0}", e.PropertyName);
+            };
+
             // Change a couple properties to trigger the event
             d.DocName = "My Document";
             d.NeedsSave = true;
