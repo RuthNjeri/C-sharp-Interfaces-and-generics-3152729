@@ -34,7 +34,8 @@ namespace GenChallengeSolution
 
 
             // What is the entire collection worth?
-
+            carList.ForEach(TotalCollectionValue); // Total value delegate
+            Console.WriteLine("Total collection is worth: {0}\n", total);
 
             // How many unique manufacturers are there?
 
@@ -42,6 +43,11 @@ namespace GenChallengeSolution
 
             Console.WriteLine("\nHit Enter key to continue...");
             Console.ReadLine();
+        }
+
+        static int total = 0;
+        static void TotalCollectionValue(ClassicCar c) {
+           total += c.m_Value;
         }
 
         static void populateData(List<ClassicCar> theList) {
